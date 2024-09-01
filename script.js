@@ -1,18 +1,23 @@
 var lat;
 var long;
+var locale_lat;
+var locale_long;
+var requestedData;
+var locationType;
 
-function gotLocation(location){
-    // console.log('Latitude:',location.coords.latitude)
-    // console.log('Longitude:',location.coords.longitude)
-    lat = location.coords.latitude;
-    long = location.coords.longitude;
+function requestCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
 }
-
-function failedLocation(){
-    console.log("Unable to retrieve location")
+requestCurrentLocation();
+  
+function showPosition(position) {
+    locale_lat = position.coords.latitude;
+    locale_long = position.coords.longitude;
 }
-
-navigator.geolocation.getCurrentPosition(gotLocation ,failedLocation);
 
 const chatbot = document.querySelector('.chatbotContainer');
 const chatInput = document.querySelector('.typed-txt');
@@ -20,134 +25,164 @@ const chatbotLogo = document.querySelector('.chatbotLogo');
 const closeBtn = document.querySelector('.close_btn');
 const sendBtn = document.querySelector('.sendBtn');
 const chatArea = document.querySelector('.chatArea');
-const cityName = document.querySelector('.typed-txt').value;
-var requestedData;
-var locationType;
-
 
 closeBtn.addEventListener('click', function(){
     chatbot.classList.remove("active");
-    // console.log('Closed chatbox')
+    chatArea.innerHTML = '';
 })
-chatbotLogo.addEventListener('click', function(){
+chatbotLogo.addEventListener('click', function(e){
     chatbot.classList.toggle("active");
-    // console.log('Clicked chatbot logo')
+    startChat();
 })
 
+function startChat(){
+    const postQuery = document.createElement('span');
+    postQuery.textContent = "What can I help you with today?";
+    postQuery.classList.add('chat');
+    postQuery.classList.add('incoming');
+    const div = document.createElement('div');
+    div.classList.add('select_requestType');
+    div.innerHTML = '<p>Select one option.</p>'
 
-// sendBtn.addEventListener('click', function(){
-//     const cityName = document.querySelector('.typed-txt').value;
-//     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`)
-//     .then(response => response.json())
-//     .then(data => console.log(data))
+    const tempBtn = document.createElement('button');
+    tempBtn.classList.add('getBtn');
+    tempBtn.classList.add('temp');
+    tempBtn.textContent = "Temperature";
 
+    const timeBtn = document.createElement('button');
+    timeBtn.classList.add('getBtn');
+    timeBtn.classList.add('time');
+    timeBtn.textContent = "Time";
 
-//     fetch(`https://timezone.abstractapi.com/v1/current_time/?api_key=${timeAPI}&location=${cityName}`)
-//     .then(response => response.json())
-//     .then(data => console.log(data))
-// })
+    const windBtn = document.createElement('button');
+    windBtn.classList.add('getBtn');
+    windBtn.classList.add('wind');
+    windBtn.textContent = "Wind";
 
-const getInfo = document.querySelector('.getInfo');
-getInfo.addEventListener('click', function(e){
-    
-    requestedData = e.target.innerText;
+    const weatherBtn = document.createElement('button');
+    weatherBtn.classList.add('getBtn');
+    weatherBtn.classList.add('weather');
+    weatherBtn.textContent = "Weather";
 
+    div.appendChild(tempBtn);
+    div.appendChild(timeBtn);
+    div.appendChild(windBtn);
+    div.appendChild(weatherBtn);
+
+    postQuery.appendChild(div);
+    chatArea.appendChild(postQuery);
+
+    const select_requestType = document.querySelector('.select_requestType')
+    select_requestType.addEventListener('click', function(e){
+        e.stopPropagation();
+        selectedBtn = e.target.textContent;
+        requestLocation();
+    })
+}
+
+function requestLocation(){
     const postQuery = document.createElement('span');
     postQuery.classList.add('chat');
     postQuery.classList.add('incoming');
-    postQuery.innerHTML = 
-    `<div class="askLocation">
-    <p class="askLocationText">Select the location for your results</p>
-    <button type="button" class="getBtn">Current</button>
-    <button type="button" class="getBtn">Other location</button>
-    </div>`;
+    const div = document.createElement('div');
+    div.classList.add('select_locationType');
+    div.innerHTML = '<p>Select one option.</p>';
+    const currentBtn = document.createElement('button');
+    currentBtn.classList.add('getBtn');
+    currentBtn.textContent = "Current"
+    const otherBtn = document.createElement('button');
+    otherBtn.classList.add('getBtn');
+    otherBtn.textContent = "Other"
+    div.appendChild(currentBtn);
+    div.appendChild(otherBtn);
+
+    postQuery.appendChild(div);
     chatArea.appendChild(postQuery);
-    
-    const askLocation = document.querySelector('.askLocation');
-    askLocation.addEventListener('click', function(e){
-        locationType = e.target.innerText;
 
-        if(locationType == 'Other location'){
-            chatInput.removeAttribute('disabled');
-            const postQuery = document.createElement('span');
-            postQuery.classList.add('chat');
-            postQuery.classList.add('incoming');
-            postQuery.innerText = 
-            `Enter the specific location...`;
-            chatArea.appendChild(postQuery);
-
-            sendBtn.addEventListener('click', function(){
-                chatInput.setAttribute('disabled', '');
-                fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${weatherAPI}`)
-                .then(response => response.json())
-                .then(data => 
-                        {
-                            lat = data[0].lat;
-                            long = data[0].lon;
-    
-                            console.log(requestedData);
-                            console.log(locationType + lat + long);
-                        }
-                    )
-            })
-
-
-        }else{
-            if(requestedData == 'Temperature'){
-                getTemperature(lat, long)
-            }else if(requestedData == 'Time'){
-                fetch(`https://timezone.abstractapi.com/v1/current_time/?api_key=${timeAPI}&location=${cityName}`)
-                .then(response => response.json())
-                .then(data => console.log(data))
-            }else if(requestedData == 'Wind Speed'){
-                getWind(lat, long);
-            }else if(requestedData == 'Weather'){
-                getWeather(lat, long);
+    const select_locationType = document.querySelector('.select_locationType');
+    select_locationType.addEventListener('click', function(e){
+        e.stopPropagation();
+        locationType = e.target.textContent;
+        if(locationType == "Current"){
+            if(selectedBtn == 'Temperature'){
+                fetchTemperature(locale_lat, locale_long)
+            }else if(selectedBtn == 'Time'){
+                fetchTime(locale_lat, locale_long)
+            }else if(selectedBtn == 'Wind'){
+                fetchWind(locale_lat, locale_long)
+            }else if(selectedBtn == 'Weather'){
+                fetchWeather(locale_lat, locale_long)
             }
         }
+        else{
+            requestOtherLocation();
+        }
     })
-})
 
-function getTemperature(lat,long){
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}&units=metric`)
-                .then(response => response.json())
-                .then(data => {
-                    const postQuery = document.createElement('span');
-                    postQuery.classList.add('chat');
-                    postQuery.classList.add('incoming');
-                    postQuery.innerHTML =
-                    `Location: ${data.name} <br><br>
-                    Current Temperature: ${data.main.temp} <br>
-                    Feels Like: ${data.main.feels_like}`;
-                    chatArea.appendChild(postQuery);
-                })
 }
-function getWind(lat, long){
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}&units=metric`)
-                .then(response => response.json())
-                .then(data => {
-                    const postQuery = document.createElement('span');
-                    postQuery.classList.add('chat');
-                    postQuery.classList.add('incoming');
-                    postQuery.innerHTML =
-                    `Location: ${data.name} <br><br>
-                    Wind speed: ${data.wind.speed}<br>
-                    Gust: ${data.wind.gust}<br>
-                    Deg: ${data.wind.deg}`;
-                    chatArea.appendChild(postQuery);
-                })
+
+function requestOtherLocation(){
+    const postQuery = document.createElement('span');
+    postQuery.classList.add('chat');
+    postQuery.classList.add('incoming');
+    postQuery.textContent = "Enter location";
+
+    chatInput.removeAttribute('disabled');
+    chatInput.focus();
+    sendBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        chatInput.setAttribute('disabled', '');
+        const cityName = document.querySelector('.typed-txt').value;
+        fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${weatherAPI}`)
+        .then(response => response.json())
+        .then(data => 
+            {
+                lat = data[0].lat;
+                long = data[0].lon;
+
+                if(selectedBtn == 'Temperature'){
+                    fetchTemperature(lat, long)
+                }else if(selectedBtn == 'Time'){
+                    fetchTime(lat, long)
+                }else if(selectedBtn == 'Wind'){
+                    fetchWind(lat, long);
+                }else if(selectedBtn == 'Weather'){
+                    fetchWeather(lat, long);
+                }
+            })
+    })
 }
-function getWeather(lat, long){
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}&units=metric`)
-                .then(response => response.json())
-                .then(data => {
-                    const postQuery = document.createElement('span');
-                    postQuery.classList.add('chat');
-                    postQuery.classList.add('incoming');
-                    postQuery.innerHTML =
-                    `Location: ${data.name} <br><br>
-                    Wind speed: ${data.weather[0].main}<br>
-                    Description: ${data.weather[0].description}`;
-                    chatArea.appendChild(postQuery);
-                })
+
+function chatMore(){
+    const chatArea = document.querySelector('.chatArea');
+    const postQuery = document.createElement('span');
+    postQuery.classList.add('chat');
+    postQuery.classList.add('incoming');
+    postQuery.innerText = ' Chat More?';
+    const yesBtn = document.createElement('button');
+    yesBtn.classList.add('getBtn');
+    yesBtn.classList.add('yes');
+    yesBtn.innerText = 'Yes';
+    const noBtn = document.createElement('button');
+    noBtn.classList.add('getBtn');
+    noBtn.classList.add('no');
+    noBtn.innerText = 'No';
+    postQuery.appendChild(yesBtn);
+    postQuery.appendChild(noBtn);
+    chatArea.appendChild(postQuery);
+
+    yesBtn.addEventListener('click', function(){
+        startChat();
+    })
+    noBtn.addEventListener('click', function(){
+        chatbot.classList.remove("active");
+        chatArea.innerHTML = '';
+    })
 }
+
+
+// Auto=scroll to bottom when more content is added
+window.setInterval(function() {
+    var elem = document.getElementById('data');
+    elem.scrollTop = elem.scrollHeight;
+  }, 1000);
