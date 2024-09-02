@@ -30,6 +30,8 @@ closeBtn.addEventListener('click', function(){
     chatArea.innerHTML = '';
 })
 chatbotLogo.addEventListener('click', function(e){
+    e.preventDefault();
+    chatArea.innerHTML = '';
     chatbot.classList.toggle("active");
     startChat();
 })
