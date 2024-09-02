@@ -12,8 +12,7 @@ function requestCurrentLocation() {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
-requestCurrentLocation();
-  
+
 function showPosition(position) {
     locale_lat = position.coords.latitude;
     locale_long = position.coords.longitude;
@@ -76,6 +75,7 @@ function startChat(){
     select_requestType.addEventListener('click', function(e){
         e.stopPropagation();
         selectedBtn = e.target.textContent;
+        myMessage(selectedBtn);
         requestLocation();
     })
 }
@@ -86,7 +86,7 @@ function requestLocation(){
     postQuery.classList.add('incoming');
     const div = document.createElement('div');
     div.classList.add('select_locationType');
-    div.innerHTML = '<p>Select one option.</p>';
+    div.innerHTML = '<p>Select location type</p>';
     const currentBtn = document.createElement('button');
     currentBtn.classList.add('getBtn');
     currentBtn.textContent = "Current"
@@ -103,7 +103,10 @@ function requestLocation(){
     select_locationType.addEventListener('click', function(e){
         e.stopPropagation();
         locationType = e.target.textContent;
+        myMessage(locationType);
+
         if(locationType == "Current"){
+            requestCurrentLocation();
             if(selectedBtn == 'Temperature'){
                 fetchTemperature(locale_lat, locale_long)
             }else if(selectedBtn == 'Time'){
@@ -126,6 +129,7 @@ function requestOtherLocation(){
     postQuery.classList.add('chat');
     postQuery.classList.add('incoming');
     postQuery.textContent = "Enter location";
+    chatArea.appendChild(postQuery);
 
     chatInput.removeAttribute('disabled');
     chatInput.focus();
@@ -182,7 +186,12 @@ function chatMore(){
 
 
 // Auto=scroll to bottom when more content is added
-window.setInterval(function() {
+// window.setInterval(function() {
+//     var elem = document.getElementById('data');
+//     elem.scrollTop = elem.scrollHeight;
+//   }, 1000);
+
+  function autoScroll(){
     var elem = document.getElementById('data');
     elem.scrollTop = elem.scrollHeight;
-  }, 1000);
+  }

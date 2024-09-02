@@ -1,6 +1,7 @@
 // NOTE: Fetch Methods
 function fetchTemperature(lat,long){
-    myMessage()
+    const cityName = document.querySelector('#inputValue').value;
+    myMessage(cityName)
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}&units=metric`)
     .then(response => response.json())
     .then(data => {
@@ -12,15 +13,18 @@ function fetchTemperature(lat,long){
         postQuery.classList.add('incoming');
         postQuery.innerHTML =
         `Location: ${data.name} <br><br>
-        Current Temperature: ${data.main.temp} <br>
-        Feels Like: ${data.main.feels_like}`;
+        🌡️
+        Current Temperature: ${data.main.temp}°C<br>
+        Feels Like: ${data.main.feels_like}°C`;
         chatArea.appendChild(postQuery);
 
         chatMore();
+        autoScroll();
     })
 }
 function fetchWind(lat, long){
-    myMessage()
+    const cityName = document.querySelector('#inputValue').value;
+    myMessage(cityName)
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}&units=metric`)
     .then(response => response.json())
     .then(data => {
@@ -31,16 +35,19 @@ function fetchWind(lat, long){
         postQuery.classList.add('incoming');
         postQuery.innerHTML =
         `Location: ${data.name} <br><br>
+        🍃
         Wind speed: ${data.wind.speed}<br>
         Gust: ${data.wind.gust}<br>
         Deg: ${data.wind.deg}`;
         chatArea.appendChild(postQuery);
 
         chatMore();
+        autoScroll();
     })
 }
 function fetchWeather(lat, long){
-    myMessage()
+    const cityName = document.querySelector('#inputValue').value;
+    myMessage(cityName)
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${weatherAPI}&units=metric`)
     .then(response => response.json())
     .then(data => {
@@ -51,15 +58,18 @@ function fetchWeather(lat, long){
         postQuery.classList.add('incoming');
         postQuery.innerHTML =
         `Location: ${data.name} <br><br>
-        Wind speed: ${data.weather[0].main}<br>
+        🌤️
+        Weather: ${data.weather[0].main}<br>
         Description: ${data.weather[0].description}`;
         chatArea.appendChild(postQuery);
 
         chatMore();
+        autoScroll();
     })
 }
 function fetchTime(){
-    myMessage()
+    const cityName = document.querySelector('#inputValue').value;
+    myMessage(cityName)
     fetch(`https://api.api-ninjas.com/v1/worldtime?lat=${lat}&lon=${long}&X-Api-Key=${ninjaAPI}`)
     .then(response => response.json())
     .then(data => {
@@ -69,25 +79,28 @@ function fetchTime(){
         postQuery.classList.add('chat');
         postQuery.classList.add('incoming');
         postQuery.innerHTML =
-        `Timezone: ${data.timezone}<br>
+        `Timezone: ${data.timezone}<br><br>
+        🕛
+        Time: ${data.time}<br>
         Datetime: ${data.datetime}<br>
         Day: ${data.day_of_week}`;
         chatArea.appendChild(postQuery);
 
         chatMore();
+        autoScroll();
     })
 }
 
-function myMessage(){
+function myMessage(message){
     const chatArea = document.querySelector('.chatArea');
-    const cityName = document.querySelector('.typed-txt').value;
-    if(cityName == ''){
-
+    if(message == ''){
+        
     }else{
         const postQuery = document.createElement('span');
         postQuery.classList.add('chat');
         postQuery.classList.add('outgoing');
-        postQuery.innerText =`${cityName}`;
+        postQuery.innerText =`${message}`;
         chatArea.appendChild(postQuery);
+        document.querySelector('.typed-txt').value ='';
     }
 }
