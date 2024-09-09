@@ -1,0 +1,17 @@
+@import 'variable';
+
+@mixin box-sizing {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+@mixin flex-center {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+@mixin border-radius($radius) {
+border-radius: $radius;
+}

@@ -1,0 +1,39 @@
+@import 'variable';
+@import 'mixin';
+
+
+.chatbotLogo {
+position: absolute;
+bottom: 5vh;
+right: 2vw;
+@include flex-center;
+flex-direction: column;
+align-items: flex-end;
+
+      .chatBubble {
+            width: 20vw;
+            margin-top: 0.4rem;
+            padding: 1rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s;
+            
+            &:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            }
+            
+            &_closeBtn {
+            background-color: #abb;
+            @include border-radius(50%);
+            cursor: pointer;
+            }
+      }
+      
+      .chatbot_display {
+      margin-top: 0.4rem;
+      @include border-radius(50%);
+      background-color: $theme-color;
+      padding: 1rem;
+      @include flex-center;
+      cursor: pointer;
+      }
+}

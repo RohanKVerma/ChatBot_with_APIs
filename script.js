@@ -20,16 +20,23 @@ function showPosition(position) {
 
 const chatbot = document.querySelector('.chatbotContainer');
 const chatInput = document.querySelector('.typed-txt');
-const chatbotLogo = document.querySelector('.chatbotLogo');
+const chatbot_display = document.querySelector('.chatbot_display');
 const closeBtn = document.querySelector('.close_btn');
 const sendBtn = document.querySelector('.sendBtn');
 const chatArea = document.querySelector('.chatArea');
+const chatBubble_closeBtn = document.querySelector('.chatBubble_closeBtn');
+const chatBubble = document.querySelector('.chatBubble');
+
+chatBubble_closeBtn.addEventListener('click', function(){
+    chatBubble_closeBtn.classList.add('hide');
+    chatBubble.classList.add('hide');
+})
 
 closeBtn.addEventListener('click', function(){
     chatbot.classList.remove("active");
     chatArea.innerHTML = '';
 })
-chatbotLogo.addEventListener('click', function(e){
+chatbot_display.addEventListener('click', function(e){
     e.preventDefault();
     chatArea.innerHTML = '';
     chatbot.classList.toggle("active");
@@ -178,7 +185,9 @@ function chatMore(){
     chatArea.appendChild(postQuery);
 
     yesBtn.addEventListener('click', function(){
+        chatArea.innerHTML = '';
         startChat();
+        autoScroll();
     })
     noBtn.addEventListener('click', function(){
         chatbot.classList.remove("active");
@@ -188,11 +197,6 @@ function chatMore(){
 
 
 // Auto=scroll to bottom when more content is added
-// window.setInterval(function() {
-//     var elem = document.getElementById('data');
-//     elem.scrollTop = elem.scrollHeight;
-//   }, 1000);
-
   function autoScroll(){
     var elem = document.getElementById('data');
     elem.scrollTop = elem.scrollHeight;

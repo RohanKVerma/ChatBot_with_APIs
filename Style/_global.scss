@@ -1,0 +1,21 @@
+@import 'variable';
+@import 'mixin';
+
+body {
+font-family: 'Roboto', sans-serif;
+background-color: $primary-bg-color;
+}
+
+.main_container {
+min-width: 100vw;
+min-height: 100vh;
+}
+
+.active{
+display: block;
+bottom: 10%
+}
+
+.hide{
+display: none;
+}

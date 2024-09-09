@@ -79,9 +79,7 @@ function fetchTime(){
         postQuery.classList.add('chat');
         postQuery.classList.add('incoming');
         postQuery.innerHTML =
-        `Timezone: ${data.timezone}<br><br>
-        🕛
-        Time: ${data.time}<br>
+        `🕛
         Datetime: ${data.datetime}<br>
         Day: ${data.day_of_week}`;
         chatArea.appendChild(postQuery);

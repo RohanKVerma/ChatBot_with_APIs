@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+     <link rel="stylesheet" href="./Style/main.css">
+</head>
+<body>
+        <div class="header">
+            <div class="header_left">
+                <div class="header_companyLogo">
+                    <span>
+                        <img class="header_companyLogo-img" src="./Assets/chat_24dp_FFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo">
+                        <h2>ChatBot</h2>
+                    </span>
+                </div>
+                <div class="header_pages">
+                    <ul class="header_pages-list">
+                        <li class="header_pages-listItem">Product<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></li>
+                        <li class="header_pages-listItem">Pricing<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></li>
+                        <li class="header_pages-listItem">Integrations<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></li>
+                        <li class="header_pages-listItem">Resources<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header_right">
+                <button type="button" class="header_login-button">Log in</button>
+                <button type="button" class="header_signup-button">Sign up free</button>
+            </div>
+        </div>
+
+        <div class="chatbotContainer">
+            <div class="top">
+                <div class="title">ChatBot</div>
+                <div class="close_btn">
+                    <img src="/Assets/close_24dp_000_FILL0_wght400_GRAD0_opsz24.svg" alt="Close">
+                </div>
+            </div>
+            <div class="chatArea" id="data">                
+            </div>
+            <div class="bottomArea">
+                <div class="typingArea">
+                    <input type="text" class="typed-txt" id="inputValue" disabled placeholder="Enter your message...">
+                </div>
+                <div class="sendBtn">
+                    <img src="/Assets/send_24dp_FFF_FILL0_wght400_GRAD0_opsz24.svg" alt="Send">
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbotLogo">
+            <img class="chatBubble_closeBtn" src="./Assets/close_24dp_000_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+            <div class="chatBubble">🙌 Welcome back! How may I help you today? 🤖</div>
+            <img class="chatbot_display" src="./Assets/chat_24dp_FFF_FILL0_wght400_GRAD0_opsz24.svg" alt="ChatBot Logo">
+        </div>
+
+    <script src="./APIKey.js"></script>    
+    <script src="./fetch.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
