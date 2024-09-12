@@ -20,12 +20,12 @@ function showPosition(position) {
 
 const chatbot = document.querySelector('.chatbotContainer');
 const chatInput = document.querySelector('.typed-txt');
-const chatbot_display = document.querySelector('.chatbot_display');
+const chatbot_display = document.querySelector('.chatbotLogo .chatbot_display');
+const chatBubble_closeBtn = document.querySelector('.chatbotLogo .chatBubble_closeBtn');
+const chatBubble = document.querySelector('.chatbotLogo .chatBubble');
 const closeBtn = document.querySelector('.close_btn');
 const sendBtn = document.querySelector('.sendBtn');
 const chatArea = document.querySelector('.chatArea');
-const chatBubble_closeBtn = document.querySelector('.chatBubble_closeBtn');
-const chatBubble = document.querySelector('.chatBubble');
 
 chatBubble_closeBtn.addEventListener('click', function(){
     chatBubble_closeBtn.classList.add('hide');
@@ -33,13 +33,12 @@ chatBubble_closeBtn.addEventListener('click', function(){
 })
 
 closeBtn.addEventListener('click', function(){
-    chatbot.classList.remove("active");
+    chatbot.classList.remove('active');
     chatArea.innerHTML = '';
 })
-chatbot_display.addEventListener('click', function(e){
-    e.preventDefault();
+chatbot_display.addEventListener('click', function(){
     chatArea.innerHTML = '';
-    chatbot.classList.toggle("active");
+    chatbot.classList.toggle('active');
     startChat();
 })
 
@@ -142,8 +141,7 @@ function requestOtherLocation(){
 
     chatInput.removeAttribute('disabled');
     chatInput.focus();
-    sendBtn.addEventListener('click', function(e){
-        e.stopPropagation();
+    sendBtn.addEventListener('click', function(){
         chatInput.setAttribute('disabled', '');
         const cityName = document.querySelector('.typed-txt').value;
         fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${weatherAPI}`)
@@ -163,6 +161,11 @@ function requestOtherLocation(){
                     fetchWeather(lat, long);
                 }
             })
+            .catch((error) => {
+                // console.log(error);
+                var displayMessage = 'Could not found any latitude and longitude for the given location.'
+                botMessage(displayMessage);
+              });
     })
 }
 

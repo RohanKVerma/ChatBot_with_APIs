@@ -102,3 +102,17 @@ function myMessage(message){
         document.querySelector('.typed-txt').value ='';
     }
 }
+
+function botMessage(message){
+    const chatArea = document.querySelector('.chatArea');
+    if(message == ''){
+        
+    }else{
+        const postQuery = document.createElement('span');
+        postQuery.classList.add('chat');
+        postQuery.classList.add('incoming');
+        postQuery.innerText =`${message}`;
+        chatArea.appendChild(postQuery);
+        document.querySelector('.typed-txt').value ='';
+    }
+}

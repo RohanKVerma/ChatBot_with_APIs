@@ -8,13 +8,37 @@ body {
   min-height: 100vh;
 }
 
-.active {
-  display: block;
+.chatbotContainer.active {
+  display: flex;
   bottom: 10%;
 }
 
 .hide {
   display: none;
+}
+
+.incoming {
+  background-color: royalblue;
+  color: white;
+  border-radius: 10px 10px 10px 0;
+  justify-content: center;
+  align-self: flex-start;
+}
+
+.outgoing {
+  background-color: rgb(163, 229, 255);
+  border-radius: 10px 10px 0 10px;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.getBtn {
+  padding: 0.2rem;
+  margin: 0.1rem;
+  border: 0 !important;
+  outline: 0 !important;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .chatbotLogo {
@@ -38,19 +62,19 @@ body {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
 .chatbotLogo .chatBubble_closeBtn {
-  background-color: #abb;
+  background-color: #f0f0f0;
   border-radius: 50%;
   cursor: pointer;
 }
 .chatbotLogo .chatbot_display {
-  margin-top: 0.4rem;
-  border-radius: 50%;
-  background-color: royalblue;
-  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
+  margin-top: 0.4rem;
+  background-color: royalblue;
   cursor: pointer;
+  padding: 1rem;
 }
 
 .header {
@@ -132,16 +156,19 @@ body {
   position: absolute;
   background-color: white;
   border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   border-radius: 20px;
   height: 70%;
   width: 30%;
   bottom: -60%;
   right: 1%;
-  z-index: 99;
+  z-index: 999;
   overflow: hidden;
   display: none;
 }
-
 @media (max-width: 980px) {
   .chatbotContainer {
     width: 50%;
@@ -152,14 +179,16 @@ body {
     width: 80%;
   }
 }
-.top {
+.chatbotContainer .top {
+  position: absolute;
+  top: 0;
   width: 100%;
+  height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: royalblue;
@@ -169,74 +198,58 @@ body {
   border-bottom: 1px solid black;
   box-shadow: 0 0 5px black;
 }
-
-.title {
+.chatbotContainer .top .title {
   font-size: 2rem;
   font-weight: 400;
+  margin-left: 2rem;
 }
-
-.close_btn {
+.chatbotContainer .top .close_btn {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
   border-radius: 50%;
   padding: 0.2rem;
+  margin-right: 1rem;
   cursor: pointer;
 }
-
-.chatArea {
-  padding: 1rem;
+.chatbotContainer .chatArea {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 57vh;
+  top: 10%;
+  bottom: 12%;
   overflow-y: scroll;
 }
-
-.chatArea .chat {
+.chatbotContainer .chatArea .chat {
   border: 1px solid black;
   padding: 0.4rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
   margin-bottom: 0.4rem;
   max-width: -moz-fit-content;
   max-width: fit-content;
 }
-
-.incoming {
-  background-color: royalblue;
-  color: white;
-  border-radius: 10px 10px 10px 0;
-  justify-content: center;
-  align-self: flex-start;
-}
-
-.outgoing {
-  background-color: rgb(163, 229, 255);
-  border-radius: 10px 10px 0 10px;
-  justify-content: center;
-  align-self: flex-end;
-}
-
-.bottomArea {
+.chatbotContainer .bottomArea {
   position: absolute;
   bottom: 0;
+  height: 5%;
   padding: 1rem;
   border-top: 1px solid black;
   width: 100%;
-  height: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-
-.typingArea {
+.chatbotContainer .bottomArea .typingArea {
+  margin-left: 0.5rem;
   flex-grow: 1;
 }
-
-.typingArea input {
+.chatbotContainer .bottomArea .typingArea input {
   width: 100%;
   height: 100%;
   padding: 0.5rem;
@@ -244,16 +257,15 @@ body {
   border: 1px solid black;
   border-radius: 20px;
 }
-
-.typingArea input:focus {
-  background-color: #dedede;
+.chatbotContainer .bottomArea .typingArea input:focus {
+  background-color: #f0f0f0;
 }
-
-.sendBtn {
+.chatbotContainer .bottomArea .sendBtn {
   background-color: royalblue;
   border-radius: 50%;
   padding: 0.3rem;
-  margin-left: 0.5rem;
+  margin-left: 1.5rem;
+  margin-right: 0.5rem;
   display: grid;
   place-content: center;
   cursor: pointer;

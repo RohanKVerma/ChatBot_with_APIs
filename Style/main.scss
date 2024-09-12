@@ -9,120 +9,117 @@
   position: absolute;
   background-color: $primary-bg-color;
   border: 2px solid $border-color;
+  @include flex-center;
+  flex-direction: column;
   @include border-radius(20px);
   height: 70%;
   width: 30%;
   bottom: -60%;
   right: 1%;
-  z-index: 99;
+  z-index: 999;
   overflow: hidden;
   display: none;
-}
 
-@media (max-width: 980px) {
-  .chatbotContainer {
-    width: 50%;
+  @media (max-width: 980px) {
+      width: 50%;
   }
-}
 
-@media (max-width: 425px) {
-  .chatbotContainer {
-    width: 80%;
-  }
-}
-
-.top {
-  width: 100%;
-  @include flex-center;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background-color: $theme-color;
-  color: $primary-bg-color;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom: 1px solid $border-color;
-  box-shadow: 0 0 5px $border-color;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: 400;
-}
-
-.close_btn {
-  @include flex-center;
-  background-color: #f0f0f0;
-  @include border-radius(50%);
-  padding: 0.2rem;
-  cursor: pointer;
-}
-
-.chatArea {
-  padding: 1rem;
-  @include flex-center;
-  flex-direction: column;
-  width: 100%;
-  height: 57vh;
-  overflow-y: scroll;
-}
-
-.chatArea .chat {
-  border: 1px solid $border-color;
-  padding: 0.4rem;
-  margin-bottom: 0.4rem;
-  max-width: fit-content;
-}
-
-.incoming {
-  background-color: $theme-color;
-  color: $primary-bg-color;
-  @include border-radius(10px 10px 10px 0);
-  justify-content: center;
-  align-self: flex-start;
-}
-
-.outgoing{
-      background-color: $secondary-color;
-      border-radius: 10px 10px 0 10px;
-      justify-content: center;
-      align-self: flex-end;
+  @media (max-width: 425px) {
+      width: 80%;
   }
   
-  .bottomArea{
+  & .top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    
+    @include flex-center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: $theme-color;
+    color: $primary-bg-color;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom: 1px solid $border-color;
+    box-shadow: 0 0 5px $border-color;
+  
+    .title {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-left: 2rem;
+    }
+    
+    .close_btn {
+      @include flex-center;
+      background-color: $close_btn_bg;
+      @include border-radius(50%);
+      padding: 0.2rem;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  & .chatArea {
+    position: absolute;
+    @include flex-center;
+    flex-direction: column;
+    width: 100%;
+    // height: 85%;
+    top: 10%;
+    bottom: 12%;
+    overflow-y: scroll;
+  
+    & .chat {
+      // position: absolute;
+      // top: 5%;
+      border: 1px solid $border-color;
+      padding: 0.4rem;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      margin-bottom: 0.4rem;
+      max-width: fit-content;
+    }
+  }
+
+  & .bottomArea{
       position: absolute;
       bottom: 0;
+      height: 5%;
       padding: 1rem;
       border-top: 1px solid $border-color;
       width: 100%;
-      height: 40px;
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      & .typingArea{
+        margin-left: .5rem;  
+        flex-grow: 1;
+          & input{
+              width: 100%;
+              height: 100%;
+              padding: 0.5rem;
+              outline: 0 !important;
+              border: 1px solid $border-color;
+              border-radius: 20px;
+              
+              &:focus{
+                  background-color: $close_btn_bg;
+              }
+          }
+      }
+      & .sendBtn{
+          background-color: $theme-color;
+          border-radius: 50%;
+          padding: .3rem;
+          margin-left: 1.5rem;
+          margin-right: .5rem;
+          display: grid;
+          place-content: center;
+          cursor: pointer;
+      }
   }
-  .typingArea{
-      flex-grow: 1;
-  }
-  .typingArea input{
-      width: 100%;
-      height: 100%;
-      padding: 0.5rem;
-      outline: 0 !important;
-      border: 1px solid $border-color;
-      border-radius: 20px;
-  }
-  .typingArea input:focus{
-      background-color: #dedede;
-  }
-  .sendBtn{
-      background-color: $theme-color;
-      border-radius: 50%;
-      padding: .3rem;
-      margin-left: 0.5rem;
-      display: grid;
-      place-content: center;
-      cursor: pointer;
-  }
+}
